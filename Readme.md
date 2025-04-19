@@ -8,14 +8,14 @@
 | Markup       | HTML5             |
 | Styling      | CSS3              |
 | Logic        | JavaScript (Vanilla) |
-| Hosting      | GitHub Pages (or Netlify) |
+| Hosting      | GitHub Pages      |
 | Versioning   | Git + GitHub      |
 
 ---
 
 ## ✨ Features (Milestone 1)
 
-- Responsive layout using **Flexbox or CSS Grid**
+- Personal page to display my personal projects and researches
 - Clean navigation bar with links between pages
 - "About Me" and "Projects" sections
 - Footer with contact links (GitHub, Email, etc.)
