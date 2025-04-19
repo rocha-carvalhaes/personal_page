@@ -41,11 +41,6 @@ The site will be deployed using:
 - **GitHub Pages** *(free and simple)*  
   [https://pages.github.com](https://pages.github.com)  
 
-Or:
-
-- **Netlify** *(optional, more dynamic features)*  
-  [https://netlify.com](https://netlify.com)
-
 ---
 
 ## 📎 License
@@ -55,4 +50,4 @@ Feel free to fork or adapt it if you're learning too!
 
 ---
 
-> Made with 💡 and ☕ by [Your Name]
+> Made with 💡 and ☕ by Gabriel Carvalhaes
