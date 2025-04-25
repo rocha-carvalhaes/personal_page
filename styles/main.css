@@ -24,7 +24,15 @@ nav {
     display: flex;                   /* Usa flexbox para alinhar os itens em linha */
     justify-content: space-between;  /* Espaço entre os itens extremos */
     align-items: center;             /* Alinhamento vertical central */
-    padding: 10px 20px;              /* Espaçamento interno (top/bottom: 10px, sides: 20px) */
+    padding: 10px 20px;   
+    margin-bottom: 30px;           /* Espaçamento interno (top/bottom: 10px, sides: 20px) */
+}
+
+p.projectsText {
+    padding-bottom: 10px;
+    line-height: 1.5;
+    color: rgb(165, 165, 165);
+    text-align: justify;
 }
 
 /* === Blocos da navegação: esquerda, centro e direita === */
@@ -84,13 +92,35 @@ a:hover {
 }
 
 #treeContainer {
-    padding: 40px 20px 10px 20px; /* Espaçamento interno do contêiner da árvore */
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 10px 15px 10px 15px; /* Espaçamento interno do contêiner da árvore */
     position: relative;
-    width: 100%;
+    width: calc(100% - 30px);
     height: 300px;
     align-items: left;
     display: flex;
     align-content: center;
+}
+
+#treeContainer:hover {
+    transform: translateY(-5px) scale(1.01);
+    filter: brightness(1.05);
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    background-color: #252525;
+    border-radius: 16px;
+}
+
+#treeContainer:hover #treeProjectName {
+    opacity: 1;
+}
+
+#canvasWrapper {
+    position: relative;
+    width: 40%;
+    display: inline-block;
+    transition: transform 0.3s ease, filter 0.3s ease
 }
 
 #treeCanvas {
@@ -98,9 +128,34 @@ a:hover {
     position: relative;
     display: block;
     height: 100%;
-    width: 40%;
+    width: 100%;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+#treeProjectName {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+#canvasWrapper:hover {
+    transform: scale(1.02);
+    filter: brightness(0.9);
+}
+
+#canvasWrapper:hover #treeProjectName {
+    opacity: 1;
 }
 
 #treeText {

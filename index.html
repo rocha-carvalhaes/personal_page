@@ -12,7 +12,7 @@
     <header>
         <nav>
             <div class="nav-left">
-                <a id="home-addres" href="#home">Home</a>
+                <a id="home-addres" href="index.html">home</a>
             </div>
             <div class="nav-center">
                 <div class="nav-description">
@@ -21,22 +21,34 @@
                 </div>
             </div>
             <div class="nav-right">
-                <a id="about-addres" href="#about">About</a>
-                <a id="projects-addres" href="#projects">Projects</a>
-                <a id="contact-addres" href="#contact">Contact</a>
+                <a id="about-addres" href="#about">about</a>
+                <a id="projects-addres" href="#projects">projects</a>
+                <a id="contact-addres" href="#contact">contact</a>
             </div>
         </nav>
     </header>
 
     <div id="treeContainer">
-        <canvas id="treeCanvas"></canvas>
+        <div id="canvasWrapper">
+            <canvas id="treeCanvas"></canvas>
+            <script>
+                document.getElementById('treeCanvas').addEventListener('click', function () {
+                  window.location.href = 'just-art.html'; // change to your actual link
+                });
+              </script>
+            <div id="treeProjectName">just a project of art</div>
+        </div>
         <div id="treeText">
-            <p><strong>Just Art</strong></p>
-            <p>Welcome to my personal page!</p>
-            <p>Explore my projects and learn more about me.</p>
+            <p class="projectsText"><strong>Possibilities, evolution and randomnees</strong></p>
+            <p class="projectsText">
+                This tree is more than just code—it’s a living metaphor. As it grows, branch by branch, it mirrors the essence of my work: rooted in logic, 
+                reaching for insight, shaped by the unpredictable beauty of data. It symbolizes evolution, the unfolding of possibilities, and the delicate 
+                randomness that defines both nature and information. Just like data, the tree grows in patterns—some expected, some surprising—reminding us 
+                that within every dataset lies a story waiting to branch out.
+            </p>
         </div>
         <script src="scripts/tree-animation.js"></script>
-    </div> 
+    </div>
 
     <!-- <section id="about">
         <h2>About Me</h2>
