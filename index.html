@@ -3,33 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        
-    </style>
-    <title>Gabriel's Webpage</title>
+    <title>Gabriel's Page</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 </head>
 <body>
     <header>
-        <h1>Hi, I'm [Your Name]</h1>
         <nav>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+            <div class="nav-left">
+                <a id="home-addres" href="#home">Home</a>
+            </div>
+            <div class="nav-center">
+                <div class="nav-description">
+                    <h1 id="brand-name">G. R. Oliveira</h1>
+                    <p id="role">data analyst & educator</p>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a id="about-addres" href="#about">About</a>
+                <a id="projects-addres" href="#projects">Projects</a>
+                <a id="contact-addres" href="#contact">Contact</a>
+            </div>
         </nav>
-      </header>
-      
-      <section id="about">
+    </header>
+
+    <div id="treeContainer">
+        <canvas id="treeCanvas"></canvas>
+        <div id="treeText">
+            <p><strong>Just Art</strong></p>
+            <p>Welcome to my personal page!</p>
+            <p>Explore my projects and learn more about me.</p>
+        </div>
+        <script src="scripts/tree-animation.js"></script>
+    </div> 
+
+    <!-- <section id="about">
         <h2>About Me</h2>
         <p>[Short bio]</p>
-      </section>
-      
-      <section id="contact">
+    </section>
+    
+    <section id="contact">
         <h2>Contact</h2>
         <p>Let's connect: <a href="mailto:you@email.com">Email</a></p>
-      </section>
-      
-      <footer>
-        <p>© 2025 [Your Name]</p>
-      </footer>
+    </section> -->
+    
+    <footer>
+        <p>© 2025 Gabriel Rocha Carvalhaes Oliveira</p>
+    </footer>
 </body>
 </html>
