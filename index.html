@@ -12,13 +12,15 @@
     <header>
         <nav>
             <div class="nav-left">
-                <a id="home-addres" href="index.html">home</a>
+                <!-- <a id="home-addres" href="index.html">home</a> -->
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="nav-description">
+                        <h1 id="brand-name">G. R. Oliveira</h1>
+                        <p id="role">data analyst & educator</p>
+                    </div>
+                </a>
             </div>
             <div class="nav-center">
-                <div class="nav-description">
-                    <h1 id="brand-name">G. R. Oliveira</h1>
-                    <p id="role">data analyst & educator</p>
-                </div>
             </div>
             <div class="nav-right">
                 <a id="about-addres" href="#about">about</a>
@@ -28,18 +30,33 @@
         </nav>
     </header>
 
-    <div id="treeContainer">
-        <div id="canvasWrapper">
+    <script>
+        const contentContainer = document.querySelector('.contentContainer');
+
+        contentContainer.addEventListener('mouseenter', () => {
+            // Start your script
+            console.log('Mouse entered, start rotating images or running script!');
+        });
+
+        contentContainer.addEventListener('mouseleave', () => {
+            // Stop your script
+            console.log('Mouse left, stop the rotation or script!');
+        });
+    </script>
+
+    <div id="justArtProject" class="contentContainer">
+        <div class="contentIllustration">
             <canvas id="treeCanvas"></canvas>
             <script>
-                document.getElementById('treeCanvas').addEventListener('click', function () {
+                document.getElementById('justArtProject').addEventListener('click', function () {
                   window.location.href = 'just-art.html'; // change to your actual link
                 });
-              </script>
-            <div id="treeProjectName">just a project of art</div>
+            </script>
+            <script src="scripts/tree-animation.js"></script>
+            <div class="contentName">just a piece of art</div>
         </div>
-        <div id="treeText">
-            <p class="projectsText"><strong>Possibilities, evolution and randomnees</strong></p>
+        <div class="contentDescription">
+            <p class="projectsSubtitle">evolution, possibilities and randomness</p>
             <p class="projectsText">
                 This tree is more than just code—it’s a living metaphor. As it grows, branch by branch, it mirrors the essence of my work: rooted in logic, 
                 reaching for insight, shaped by the unpredictable beauty of data. It symbolizes evolution, the unfolding of possibilities, and the delicate 
@@ -47,18 +64,42 @@
                 that within every dataset lies a story waiting to branch out.
             </p>
         </div>
-        <script src="scripts/tree-animation.js"></script>
+
     </div>
 
-    <!-- <section id="about">
-        <h2>About Me</h2>
-        <p>[Short bio]</p>
-    </section>
-    
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Let's connect: <a href="mailto:you@email.com">Email</a></p>
-    </section> -->
+    <div class="betweenContents"></div>
+
+    <div id="galosRaceProject" class="contentContainer">
+        <div class="contentIllustration">
+            <script>
+                document.getElementById('galosRaceProject').addEventListener('click', function () {
+                  window.location.href = 'galos-race.html'; // change to your actual link
+                });
+            </script>
+            <div class="rotatingImages">
+                <img src="assets/corrida_galo_icone.png" class="contentImage" style="animation-delay: 0s">
+                <img src="assets/corrida_galo_dashboard.png" class="contentImage" style="animation-delay: 4s">
+                <img src="assets/corrida_galo_eda_2.png" class="contentImage" style="animation-delay: 8s">
+            </div>
+            <div class="contentName">galo's race analysis</div>
+        </div>
+        <div class="contentDescription">
+            <p class="projectsSubtitle">starting a new hobbie</p>
+            <p class="projectsText">
+                2023! That is going to be my best year so far!
+            </p>
+            <p class="projectsText">
+                I signed up for my first street race! I trained for 6 months. I raced. I got the race results and... I have no idea how it was.
+            </p>
+            <p class="projectsText">
+                -- WHAT? -- That is right! I placed 948 out of 1343 competitors but that doesn't say much. 
+            </p>
+            <p class="projectsText">
+                How far I was from the last place? How far I was from the first? How hard do I have to train to reach the Top 50%?
+                That is what investigated with this project.
+            </p>
+        </div>
+    </div>
     
     <footer>
         <p>© 2025 Gabriel Rocha Carvalhaes Oliveira</p>

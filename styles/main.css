@@ -35,6 +35,15 @@ p.projectsText {
     text-align: justify;
 }
 
+p.projectsSubtitle {
+    font-size: 22px;
+    font-weight: 800;
+    padding-bottom: 10px;
+    line-height: 1.5;
+    color: rgb(165, 165, 165);
+    text-align: justify;
+}
+
 /* === Blocos da navegação: esquerda, centro e direita === */
 .nav-left,
 .nav-center,
@@ -68,6 +77,7 @@ p.projectsText {
     align-items: center;        /* Centraliza horizontalmente */
     justify-content: center;    /* Centraliza verticalmente se necessário */
     text-align: center;         /* Centraliza texto dentro dos elementos */
+    cursor: pointer;
 }
 
 /* === Estilo padrão dos links === */
@@ -91,7 +101,7 @@ a:hover {
     font-size: 0.8rem;           /* Tamanho da fonte do cargo */
 }
 
-#treeContainer {
+.contentContainer {
     margin-left: 15px;
     margin-right: 15px;
     padding: 10px 15px 10px 15px; /* Espaçamento interno do contêiner da árvore */
@@ -101,9 +111,14 @@ a:hover {
     align-items: left;
     display: flex;
     align-content: center;
+    cursor: pointer;
 }
 
-#treeContainer:hover {
+.betweenContents {
+    height: 15px;
+}
+
+.contentContainer:hover {
     transform: translateY(-5px) scale(1.01);
     filter: brightness(1.05);
     transition: all 0.4s ease-in-out;
@@ -112,15 +127,15 @@ a:hover {
     border-radius: 16px;
 }
 
-#treeContainer:hover #treeProjectName {
+.contentContainer:hover .contentName {
     opacity: 1;
 }
 
-#canvasWrapper {
+.contentIllustration {
     position: relative;
     width: 40%;
     display: inline-block;
-    transition: transform 0.3s ease, filter 0.3s ease
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 #treeCanvas {
@@ -131,10 +146,9 @@ a:hover {
     width: 100%;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
 }
 
-#treeProjectName {
+.contentName {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -149,17 +163,63 @@ a:hover {
     pointer-events: none;
 }
 
-#canvasWrapper:hover {
+.contentIllustration:hover {
     transform: scale(1.02);
     filter: brightness(0.9);
 }
 
-#canvasWrapper:hover #treeProjectName {
+.contentIllustration:hover .contentName {
     opacity: 1;
 }
 
-#treeText {
+.contentDescription {
     position: relative;
     width: 60%;
     padding: 0px 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 11;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
+}
+
+.rotatingImages {
+    position: relative;
+    width: 100%; /* set your preferred width */
+    height: 100%; /* set your preferred height */
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    background-color: #1a1a1a;
+    border-radius: 12px;
+}
+
+.contentImage {
+    width: auto;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: absolute;
+    object-fit: cover;
+    opacity: 0;
+    border-radius: 12px;
+}
+
+/* Static first image always visible */
+.contentImage:first-child {
+    opacity: 1;
+}
+
+.contentContainer:hover .contentImage {
+    animation: fadeAnimation 12s infinite;
+}
+
+@keyframes fadeAnimation {
+    0% { opacity: 1; }
+    30% { opacity: 1; }
+    33% { opacity: 0; }
+    97% { opacity: 0; }
+    100% { opacity: 1; }
 }
