@@ -161,6 +161,7 @@ a:hover {
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    z-index: 3;
 }
 
 .contentIllustration:hover {
@@ -168,9 +169,9 @@ a:hover {
     filter: brightness(0.9);
 }
 
-.contentIllustration:hover .contentName {
+/* .contentIllustration:hover .contentName {
     opacity: 1;
-}
+} */
 
 .contentDescription {
     position: relative;
@@ -222,4 +223,64 @@ a:hover {
     33% { opacity: 0; }
     97% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+.coverImageGif {
+    position: relative;
+    width: 100%; /* set your preferred width */
+    height: 100%; /* set your preferred height */
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    border-radius: 12px;
+    background-color: #1a1a1a;
+}
+
+.coverImageGif img {
+    display: block;
+    height: 100%;
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    transition: opacity 0.3s ease;
+    border-radius: 12px;
+
+}
+
+.standardCover {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: absolute;
+    object-fit: cover;
+    opacity: 1;
+    z-index: 1;
+    height: 100%;
+}
+
+.standardGif {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    position: absolute;
+    object-fit: cover;
+    opacity: 0;
+    z-index: 2;
+    width: 100%;
+    overflow: hidden;
+}
+
+.coverImageGif:hover .standardGif {
+    opacity: 1;
+}
+
+.coverImageGif:hover .standardCover {
+    opacity: 0;
+}
+
+.coverImageGif:hover .contentName {
+    opacity: 1;
+    z-index: 1;
+    color: black;
 }
