@@ -1,33 +1,85 @@
 /* === Reset padrão para evitar inconsistências entre navegadores === */
 * {
-    margin: 0;               /* Remove margens padrão */
-    padding: 0;              /* Remove preenchimentos padrão */
-    box-sizing: border-box;  /* Inclui padding e borda na largura total dos elementos */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* === Estilo global do corpo da página === */
+/* === Estilo global === */
 body {
-    font-family: 'Inter', sans-serif;   /* Define a fonte principal */
-    background-color: #252525;           /* Cor de fundo escura */
-    color: #ffffff;               /* Cor do texto branco */
+    font-family: 'Inter', sans-serif;
+    background-color: #252525;
+    color: #ffffff;
 }
 
 footer {
     padding: 20px;
-    font-family: 'Inter', sans-serif;   /* Define a fonte principal */
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     color: rgb(230, 230, 230);
 }
 
-/* === Navegação principal === */
+/* === Navegação === */
 nav {
-    display: flex;                   /* Usa flexbox para alinhar os itens em linha */
-    justify-content: space-between;  /* Espaço entre os itens extremos */
-    align-items: center;             /* Alinhamento vertical central */
-    padding: 10px 20px;   
-    margin-bottom: 30px;           /* Espaçamento interno (top/bottom: 10px, sides: 20px) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 30px;
 }
 
+.nav-left,
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-center {
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-right a {
+    margin-left: 15px;
+}
+
+#brand-name {
+    margin: 0;
+    font-size: 1.3rem;
+    color: rgb(230, 230, 230);
+}
+
+.nav-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+#role {
+    color: rgb(165, 165, 165);
+    font-size: 0.8rem;
+}
+
+/* === Links === */
+a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    background-color: #3b3b3b;
+    color: #fcfbb1;
+    border-radius: 8px;
+}
+
+/* === Textos de Projetos === */
 p.projectsText {
     padding-bottom: 10px;
     line-height: 1.5;
@@ -44,78 +96,17 @@ p.projectsSubtitle {
     text-align: justify;
 }
 
-/* === Blocos da navegação: esquerda, centro e direita === */
-.nav-left,
-.nav-center,
-.nav-right {
-    display: flex;            /* Flex para alinhamento interno */
-    align-items: center;      /* Alinha os itens ao centro verticalmente */
-}
-
-/* === Bloco central (geralmente título) === */
-.nav-center {
-    flex: 1;                  /* Ocupa o espaço restante entre esquerda e direita */
-    justify-content: center;  /* Centraliza o conteúdo internamente */
-}
-
-/* === Links do lado direito da navegação === */
-.nav-right a {
-    margin-left: 15px;        /* Espaço entre os links à direita */
-}
-
-/* === Estilo do título central da navegação === */
-#brand-name {
-    margin: 0;                /* Remove margem padrão do título */
-    font-size: 1.3rem;        /* Tamanho da fonte do título */
-    color: rgb(230, 230, 230)
-}
-
-/* === Estilo da descrição do meu nome e cargo === */
-.nav-description {
-    display: flex;              /* Usa flexbox */
-    flex-direction: column;     /* Alinha itens verticalmente */
-    align-items: center;        /* Centraliza horizontalmente */
-    justify-content: center;    /* Centraliza verticalmente se necessário */
-    text-align: center;         /* Centraliza texto dentro dos elementos */
-    cursor: pointer;
-}
-
-/* === Estilo padrão dos links === */
-a {
-    color: rgb(255, 255, 255);     /* Cor branca para os links */
-    text-decoration: none;           /* Remove sublinhado padrão */
-    font-size: 14px;                 /* Tamanho de fonte dos links */
-    padding: 10px;                   /* Espaço interno nos links */
-    transition: all 0.3s ease;       /* Suaviza as mudanças de estilo ao passar o mouse */
-}
-
-/* === Efeito ao passar o mouse nos links === */
-a:hover {
-    background-color: #3b3b3b;       /* Fundo escurecido no hover */
-    color: #fcfbb1;                  /* Cor de texto amarelada para contraste */
-    border-radius: 8px;
-}
-
-#role {
-    color: rgb(165, 165, 165);                  /* Cor do texto para o cargo */
-    font-size: 0.8rem;           /* Tamanho da fonte do cargo */
-}
-
+/* === Containers de Conteúdo === */
 .contentContainer {
-    margin-left: 15px;
-    margin-right: 15px;
-    padding: 10px 15px 10px 15px; /* Espaçamento interno do contêiner da árvore */
+    margin: 0 15px;
+    padding: 10px 15px;
     position: relative;
     width: calc(100% - 30px);
     height: 300px;
-    align-items: left;
     display: flex;
+    align-items: left;
     align-content: center;
     cursor: pointer;
-}
-
-.betweenContents {
-    height: 15px;
 }
 
 .contentContainer:hover {
@@ -131,6 +122,11 @@ a:hover {
     opacity: 1;
 }
 
+.betweenContents {
+    height: 15px;
+}
+
+/* === Imagens e ilustrações === */
 .contentIllustration {
     position: relative;
     width: 40%;
@@ -138,14 +134,21 @@ a:hover {
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-#treeCanvas {
-    background-color: rgba(0, 0, 0, 0.285);
+.contentIllustration:hover {
+    transform: scale(1.02);
+    filter: brightness(0.9);
+}
+
+.contentDescription {
     position: relative;
-    display: block;
-    height: 100%;
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    padding: 0px 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 11;
+    line-clamp: 11;
+    -webkit-box-orient: vertical;
+    text-overflow: clip;
 }
 
 .contentName {
@@ -164,35 +167,15 @@ a:hover {
     z-index: 3;
 }
 
-.contentIllustration:hover {
-    transform: scale(1.02);
-    filter: brightness(0.9);
-}
-
-/* .contentIllustration:hover .contentName {
-    opacity: 1;
-} */
-
-.contentDescription {
-    position: relative;
-    width: 60%;
-    padding: 0px 20px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 11;
-    line-clamp: 11;
-    -webkit-box-orient: vertical;
-    text-overflow: clip;
-}
-
+/* === Animação de Rotação de Imagens === */
 .rotatingImages {
     position: relative;
-    width: 100%; /* set your preferred width */
-    height: 100%; /* set your preferred height */
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     display: flex;
-    justify-content: center; /* center horizontally */
-    align-items: center;     /* center vertically */
+    justify-content: center;
+    align-items: center;
     background-color: #1a1a1a;
     border-radius: 12px;
 }
@@ -200,16 +183,16 @@ a:hover {
 .contentImage {
     width: auto;
     height: 100%;
+    position: absolute;
+    object-fit: cover;
     align-items: center;
     justify-content: center;
     align-content: center;
-    position: absolute;
-    object-fit: cover;
     opacity: 0;
     border-radius: 12px;
 }
 
-/* Static first image always visible */
+/* Primeira imagem visível */
 .contentImage:first-child {
     opacity: 1;
 }
@@ -226,14 +209,15 @@ a:hover {
     100% { opacity: 1; }
 }
 
+/* === Imagem de Capa e GIF === */
 .coverImageGif {
     position: relative;
-    width: 100%; /* set your preferred width */
-    height: 100%; /* set your preferred height */
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     display: flex;
-    justify-content: center; /* center horizontally */
-    align-items: center;     /* center vertically */
+    justify-content: center;
+    align-items: center;
     border-radius: 12px;
     background-color: #1a1a1a;
 }
@@ -242,36 +226,33 @@ a:hover {
     display: block;
     height: 100%;
     position: absolute;
-    /* top: 0;
-    left: 0; */
     transition: opacity 0.3s ease;
     border-radius: 12px;
-
 }
 
-.standardCover {
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    position: absolute;
-    object-fit: cover;
-    opacity: 1;
-    z-index: 1;
-    height: 100%;
-}
-
+.standardCover,
 .standardGif {
     align-items: center;
     justify-content: center;
     align-content: center;
     position: absolute;
     object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.standardCover {
+    opacity: 1;
+    z-index: 1;
+}
+
+.standardGif {
     opacity: 0;
     z-index: 2;
-    width: 100%;
     overflow: hidden;
 }
 
+/* === Hover Effects para Cover/Gif === */
 .coverImageGif:hover .standardGif {
     opacity: 1;
 }
