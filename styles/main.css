@@ -8,7 +8,7 @@
 /* === Estilo global === */
 body {
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     background-color: #252525;
     color: #ffffff;
 }
@@ -26,7 +26,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .nav-left,
@@ -89,7 +89,7 @@ p.projectsText {
 }
 
 p.projectsSubtitle {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 800;
     padding-bottom: 10px;
     line-height: 1.5;
@@ -103,7 +103,7 @@ p.projectsSubtitle {
     padding: 10px 15px;
     position: relative;
     width: calc(100% - 30px);
-    height: 300px;
+    height: 280px;
     display: flex;
     align-items: left;
     align-content: center;
@@ -124,7 +124,7 @@ p.projectsSubtitle {
 }
 
 .betweenContents {
-    height: 15px;
+    height: 10px;
 }
 
 /* === Imagens e ilustrações === */
