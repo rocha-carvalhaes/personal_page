@@ -8,6 +8,7 @@
 /* === Estilo global === */
 body {
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
     background-color: #252525;
     color: #ffffff;
 }
@@ -205,18 +206,32 @@ p.projectsSubtitle {
 /* Primeira imagem visível */
 .contentImage:first-child {
     opacity: 1;
+    z-index: 2;
 }
 
-.contentContainer:hover .contentImage {
+.contentIllustration:hover .contentImage {
     animation: fadeAnimation 12s infinite;
 }
 
-@keyframes fadeAnimation {
+.contentIllustration:hover .contentImage:first-child {
+    animation: fadeOutCover 12s 0s forwards;
+    z-index: 0;
+    opacity: 0;
+}
+
+@keyframes fadeOutCover {
     0% { opacity: 1; }
+    1% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@keyframes fadeAnimation {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
     30% { opacity: 1; }
     33% { opacity: 0; }
     97% { opacity: 0; }
-    100% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 /* === Imagem de Capa e GIF === */
@@ -257,17 +272,14 @@ p.projectsSubtitle {
     object-fit: cover;
     height: 100%;
     width: 100%;
+    opacity: 0;
+    z-index: 2;
+    overflow: hidden;
 }
 
 .standardCover {
     opacity: 1;
     z-index: 1;
-}
-
-.standardGif {
-    opacity: 0;
-    z-index: 2;
-    overflow: hidden;
 }
 
 /* === Hover Effects para Cover/Gif === */
@@ -277,6 +289,7 @@ p.projectsSubtitle {
 
 .coverImageGif:hover .standardCover {
     opacity: 0;
+    
 }
 
 .coverImageGif:hover .contentName {
