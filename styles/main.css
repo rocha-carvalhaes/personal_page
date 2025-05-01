@@ -27,6 +27,13 @@ nav {
     align-items: center;
     padding: 10px 20px;
     margin-bottom: 10px;
+    position: fixed;
+    top: 0; /* <-- REQUIRED for fixed positioning */
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: box-shadow 0.3s ease;
+    background: #252525;
 }
 
 .nav-left,
@@ -60,6 +67,10 @@ nav {
     cursor: pointer;
 }
 
+.headerBackground {
+    height: 100px;
+}
+
 #role {
     color: rgb(165, 165, 165);
     font-size: 0.8rem;
@@ -76,7 +87,7 @@ a {
 
 a:hover {
     background-color: #3b3b3b;
-    color: #fcfbb1;
+    color: hsl(59, 93%, 84%);
     border-radius: 8px;
 }
 
@@ -96,6 +107,15 @@ p.projectsSubtitle {
     color: rgb(165, 165, 165);
     text-align: justify;
 }
+
+p.projectsTitle {
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 0px;
+    line-height: 1.5;
+    color: hsl(0, 0%, 100%);
+    text-align: justify;
+} 
 
 /* === Containers de Conteúdo === */
 .contentContainer {
@@ -296,4 +316,30 @@ p.projectsSubtitle {
     opacity: 1;
     z-index: 1;
     color: black;
+}
+
+.projectContainer {
+    margin: 0px 15px 0px 15px;
+    padding: 0px 15px 0px 15px;
+    /* border-top: 1px solid #ccc; use a soft gray for subtlet */
+    position: relative;
+    width: calc(100% - 30px);
+    /* background: white; */
+}
+
+/* .projectContainer .projectIllustration {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background-color: #1a1a1a;
+} */
+
+.projectIllustration {
+    width: 80%;
+    margin: 0 auto; /* <-- this centers the block itself */
+    display: flex;
+    justify-content: center; /* <-- this centers the canvas inside */
 }

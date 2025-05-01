@@ -28,4 +28,40 @@
                 <a id="contact-addres" href="#contact">contact</a>
             </div>
         </nav>
+
+        <script>
+            window.addEventListener('scroll', function () {
+                const header = document.querySelector('.mainHeader');
+                if (window.scrollY > 10) {
+                    header.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.boxShadow = 'none';
+                }
+            });
+        </script>
     </header>
+    
+    <div class="headerBackground"></div>
+
+    <div class="projectContainer">
+        <p class="projectsTitle">just a piece of art</p>
+        <p class="projectsSubtitle">evolution, possibilities and randomness</p>
+        <p class="projectsText">
+            This project is a simple generative art piece created using JavaScript and the HTML5 canvas element.
+            The code generates a tree-like structure with branches that grow in random directions, creating a 
+            unique and organic appearance. The colors and sizes of the branches are also randomized, adding to 
+            the overall aesthetic of the piece. </p>
+        
+        <div class="projectIllustration">
+            <div>
+            <canvas id="treeCanvas"></canvas>
+            <script>
+                document.getElementById('justArtProject').addEventListener('click', function () {
+                    window.location.href = 'just-art.html'; // change to your actual link
+                });
+            </script>
+            <script src="scripts/tree-animation.js"></script>
+            </div>
+        </div>
+
+    </div>
