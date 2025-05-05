@@ -28,23 +28,10 @@
                 <a id="contact-addres" href="#contact">contact</a>
             </div>
         </nav>
+        <script src="scripts/nav-shadow.js"></script>
     </header>
     <div class="headerBackground"></div>
     
-    <script>
-        const contentContainer = document.querySelector('.contentContainer');
-
-        contentContainer.addEventListener('mouseenter', () => {
-            // Start your script
-            console.log('Mouse entered, start rotating images or running script!');
-        });
-
-        contentContainer.addEventListener('mouseleave', () => {
-            // Stop your script
-            console.log('Mouse left, stop the rotation or script!');
-        });
-    </script>
-
     <div id="justArtProject" class="contentContainer">
         <div class="contentIllustration">
             <canvas id="treeCanvas"></canvas>
@@ -133,6 +120,28 @@
             </p>
             <p class="projectsText">
                 Cheers to better wine choices!
+            </p>
+        </div>
+    </div>
+
+    <div class="betweenContents"></div>
+
+    <div id="flappyGameProject" class="contentContainer">
+        <div class="contentIllustration">
+            <script>
+                document.getElementById('flappyGameProject').addEventListener('click', function () {
+                  window.location.href = 'flappy-game.html'; // change to your actual link
+                });
+            </script>
+            <div class="coverImageGif">
+
+            </div>
+            <div class="contentName">wine recommendation system</div>
+        </div>
+        <div class="contentDescription">
+            <p class="projectsSubtitle">flappy</p>
+            <p class="projectsText">
+               flappy
             </p>
         </div>
     </div>
