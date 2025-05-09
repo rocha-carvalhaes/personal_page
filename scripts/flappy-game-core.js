@@ -1,61 +1,38 @@
-const bird = document.getElementById("bird");
-const playButton = document.getElementById("play-button");
-const pipe = document.getElementById("pipe");
-const scoreDisplay = document.getElementById("score");
+const canvas = document.getElementById("flappyCanvas");
+const ctx = canvas.getContext("2d");
 
-let birdY = 200;
-let velocity = 0;
-let gravity = 0.4;
-let isGameOver = false;
-let score = 0;
-
-document.addEventListener("keydown", jump);
-document.addEventListener("click", jump);
-
-function jump() {
-    if (!isGameOver) {
-        velocity = -10;
-    }
+const box = {
+    x: 50,
+    y: 50,
+    width: 20,
+    heigth: 20,
+    color: 'blue'
 }
 
-function gameLoop() {
-    if (isGameOver) return;
-
-    velocity += gravity;
-    birdY += velocity;
-    bird.style.top = birdY + "px";
-
-    const pipeX = parseInt(getComputedStyle(pipe).right) + 2;
-    pipe.style.right = pipeX + "px";
-
-    if (pipeX > 320) {
-        pipe.style.right = "-50px";
-        pipe.style.height = Math.floor(Math.random() * 200 + 100) + "px";
-        score++;
-        scoreDisplay.textContent = score;
-    }
-
-    // Colisão com chão ou teto
-    if (birdY > 450 || birdY < 0) {
-        gameOver();
-    }
-
-    // Colisão com cano
-    const pipeTop = parseInt(pipe.style.height);
-    if (320 - pipeX < 80 && 320 - pipeX > 0) {
-        if (birdY < pipeTop) {
-            gameOver();
-        }
-    }
-
-    requestAnimationFrame(gameLoop);
+function drawBox() {
+    ctx.fillStyle = box.color;
+    ctx.fillRect(box.x, box.y, box.width, box.heigth);
 }
 
-function gameOver() {
-    isGameOver = true;
-    alert("Game Over! Pontuação: " + score);
-    location.reload(); // Reinicia o jogo
-}
-
-pipe.style.right = "-50px";
-gameLoop();
+drawBox();
+// Add event listener for keydown event
+document.addEventListener("keydown", function (event) {
+    if (event.code === "Space") {
+        // Move the box up
+        box.y -= 10;
+    }
+    if (event.code === "ArrowDown") {
+        // Move the box down
+        box.y += 10;
+    }
+    if (event.code === "ArrowLeft") {
+        // Move the box left
+        box.x -= 10;
+    }
+    if (event.code === "ArrowRight") {
+        // Move the box right
+        box.x += 10;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBox();
+});
