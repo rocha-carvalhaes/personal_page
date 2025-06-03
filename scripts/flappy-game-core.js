@@ -8,6 +8,10 @@ let bounce = -8;
 const platformWidth = 60;
 const platformHeight = 10;
 
+const ballImage = new Image();
+ballImage.src = '../assets/pintinho_caindo.png'; // Caminho relativo
+
+
 let ball = {
     x: canvas.width / 2,
     y: canvas.height - 60,
@@ -24,13 +28,24 @@ let platforms = [
 let score = 0;
 let maxY = ball.y;
 
-function drawBall() {
-    ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fillStyle = ball.color;
-    ctx.fill();
-    ctx.closePath();
+function drawBall(facingRight = false) {
+    const imgWidth = 60;
+    const imgHeight = imgWidth / (673 / 528); // maintain aspect ratio
+
+    ctx.save(); // Save current state
+
+    if (facingRight) {
+        // Move the origin to the ball's position and flip horizontally
+        ctx.translate(ball.x + imgWidth / 2, ball.y - imgHeight / 2);
+        ctx.scale(-1, 1);
+        ctx.drawImage(ballImage, 0, 0, imgWidth, imgHeight);
+    } else {
+        ctx.drawImage(ballImage, ball.x - imgWidth / 2, ball.y - imgHeight / 2, imgWidth, imgHeight);
+    }
+
+    ctx.restore(); // Restore original state
 }
+
 
 function drawPlatforms() {
     ctx.fillStyle = 'rgb(150, 86, 27)';
@@ -121,9 +136,12 @@ function update() {
     score = platforms.length - 2; // Update score based on the number of platforms
 }
 
+let facingRight = ball.vx > 0; // or some other logic
+drawBall(facingRight);
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
+    drawBall(facingRight);
     drawPlatforms();
     drawPlatformGrass();
 
@@ -139,8 +157,14 @@ function loop() {
 }
 
 document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') ball.vx = -3;
-    if (e.key === 'ArrowRight') ball.vx = 3;
+    if (e.key === 'ArrowLeft') {
+        ball.vx = -3
+        facingRight = false; // Set facing left when moving left
+    };
+    if (e.key === 'ArrowRight') {
+        ball.vx = 3
+        facingRight = true; // Set facing right when moving right
+    }
 });
 document.addEventListener('keyup', e => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') ball.vx = 0;
