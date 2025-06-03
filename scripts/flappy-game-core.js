@@ -9,7 +9,7 @@ const platformWidth = 60;
 const platformHeight = 10;
 
 const ballImage = new Image();
-ballImage.src = 'assets/pintinho_caindo.png'; // Caminho relativo
+// ballImage.src = 'assets/pintinho_caindo_gpt.png';// Caminho relativo
 
 
 let ball = {
@@ -28,11 +28,16 @@ let platforms = [
 let score = 0;
 let maxY = ball.y;
 
-function drawBall(facingRight = false) {
+function drawBall(facingRight = false, falling = false) {
     const imgWidth = 60;
     const imgHeight = imgWidth / (673 / 528); // maintain aspect ratio
 
     ctx.save(); // Save current state
+    if (falling) {
+        ballImage.src = 'assets/pintinho_caindo_gpt.png'
+    } else {
+        ballImage.src = 'assets/pintinho_subindo_gpt.png'
+    }
 
     if (facingRight) {
         // Move the origin to the ball's position and flip horizontally
@@ -137,11 +142,15 @@ function update() {
 }
 
 let facingRight = ball.vx > 0; // or some other logic
-drawBall(facingRight);
+// drawBall(facingRight);
+
+let falling = ball.vy > 0;
+
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall(facingRight);
+    falling = ball.vy > 0
+    drawBall(facingRight, falling);
     drawPlatforms();
     drawPlatformGrass();
 
