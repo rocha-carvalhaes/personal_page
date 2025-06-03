@@ -9,7 +9,7 @@ const platformWidth = 60;
 const platformHeight = 10;
 
 const ballImage = new Image();
-ballImage.src = '../assets/pintinho_caindo.png'; // Caminho relativo
+ballImage.src = 'assets/pintinho_caindo.png'; // Caminho relativo
 
 
 let ball = {
