@@ -6,10 +6,11 @@ canvas.style.backgroundColor = 'rgb(86, 38, 173)';
 const gravity = 0.3;
 let bounce = -8;
 const platformWidth = 60;
-const platformHeight = 10;
+const platformHeight = 17;
 
 const ballImage = new Image();
-// ballImage.src = 'assets/pintinho_caindo_gpt.png';// Caminho relativo
+const platformImage = new Image();
+platformImage.src = 'assets/plataforma.png';
 
 
 let ball = {
@@ -41,11 +42,11 @@ function drawBall(facingRight = false, falling = false) {
 
     if (facingRight) {
         // Move the origin to the ball's position and flip horizontally
-        ctx.translate(ball.x + imgWidth / 2, ball.y - imgHeight / 2);
+        ctx.translate(ball.x + imgWidth / 2, ball.y - imgHeight * 0.7);
         ctx.scale(-1, 1);
         ctx.drawImage(ballImage, 0, 0, imgWidth, imgHeight);
     } else {
-        ctx.drawImage(ballImage, ball.x - imgWidth / 2, ball.y - imgHeight / 2, imgWidth, imgHeight);
+        ctx.drawImage(ballImage, ball.x - imgWidth / 2, ball.y - imgHeight * 0.7, imgWidth, imgHeight);
     }
 
     ctx.restore(); // Restore original state
@@ -55,7 +56,8 @@ function drawBall(facingRight = false, falling = false) {
 function drawPlatforms() {
     ctx.fillStyle = 'rgb(150, 86, 27)';
     for (let p of platforms) {
-    ctx.fillRect(p.x, p.y, p.width, p.height);
+    // ctx.fillRect(p.x, p.y, p.width, p.height);
+    ctx.drawImage(platformImage, p.x, p.y, p.width, p.height);
     }
 }
 
@@ -144,15 +146,15 @@ function update() {
 let facingRight = ball.vx > 0; // or some other logic
 // drawBall(facingRight);
 
-let falling = ball.vy > 0;
+let falling = ball.vy > 0.5;
 
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    falling = ball.vy > 0
+    falling = ball.vy > 0.5
     drawBall(facingRight, falling);
     drawPlatforms();
-    drawPlatformGrass();
+    // drawPlatformGrass();
 
     ctx.fillStyle = 'black';
     ctx.font = '20px Arial';
@@ -181,7 +183,7 @@ document.addEventListener('keyup', e => {
 document.addEventListener('keydown', e => {
     if (e.key === ' ') {
         ball.color = 'red';
-        bounce = -1; 
+        bounce = -0.5; 
     }
 });
 document.addEventListener('keyup', e => {
