@@ -1,7 +1,9 @@
 const canvas = document.getElementById('flappyCanvas');
 const ctx = canvas.getContext('2d');
 
-canvas.style.backgroundColor = 'rgb(86, 38, 173)';
+// // canvas.style.backgroundColor = 'rgb(86, 38, 173)';
+
+// let play = true; // Variable to control the game loop
 
 const gravity = 0.3;
 let bounce = -8;
@@ -12,6 +14,11 @@ const ballImage = new Image();
 const platformImage = new Image();
 platformImage.src = 'assets/plataforma.png';
 
+let sun = {
+    x: canvas.width * 0.2,
+    y: canvas.height * 0.8,
+    radius: 10,
+}
 
 let ball = {
     x: canvas.width / 2,
@@ -29,6 +36,14 @@ let platforms = [
 let score = 0;
 let maxY = ball.y;
 
+function drawSun() {
+    ctx.fillStyle ='rgb(217, 240, 244)';
+    ctx.beginPath();
+    ctx.arc(sun.x, sun.y, sun.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.closePath();
+}
+
 function drawBall(facingRight = false, falling = false) {
     const imgWidth = 60;
     const imgHeight = imgWidth / (673 / 528); // maintain aspect ratio
@@ -37,7 +52,7 @@ function drawBall(facingRight = false, falling = false) {
     if (falling) {
         ballImage.src = 'assets/pintinho_caindo_gpt.png'
     } else {
-        ballImage.src = 'assets/pintinho_subindo_gpt.png'
+        ballImage.src = 'assets/pintinho_subindo.png'
     }
 
     if (facingRight) {
@@ -58,13 +73,6 @@ function drawPlatforms() {
     for (let p of platforms) {
     // ctx.fillRect(p.x, p.y, p.width, p.height);
     ctx.drawImage(platformImage, p.x, p.y, p.width, p.height);
-    }
-}
-
-function drawPlatformGrass() {
-    ctx.fillStyle = 'rgb(61, 114, 36)';
-    for (let p of platforms) {
-    ctx.fillRect(p.x+1, p.y-platformHeight/2+4*(p.y/canvas.height), p.width, platformHeight*0.6);
     }
 }
 
@@ -118,7 +126,7 @@ function update() {
         if (ball.y - platforms[platforms.length - 1].y >= 0 && ball.y - platforms[platforms.length - 1].y < 5) {
             platforms.push({
                 x: Math.random() * (canvas.width - platformWidth),
-                y: 0,
+                y: -15,
                 width: platformWidth,
                 height: platformHeight
             });
@@ -151,20 +159,20 @@ let falling = ball.vy > 0.5;
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSun();
     falling = ball.vy > 0.5
     drawBall(facingRight, falling);
     drawPlatforms();
-    // drawPlatformGrass();
-
+    
     ctx.fillStyle = 'black';
     ctx.font = '20px Arial';
     ctx.fillText('Score: ' + score, 10, 30);
 }
 
 function loop() {
-    update();
-    draw();
-    requestAnimationFrame(loop);
+        update();
+        draw();
+        requestAnimationFrame(loop);
 }
 
 document.addEventListener('keydown', e => {
@@ -193,4 +201,13 @@ document.addEventListener('keyup', e => {
     }
 })
 
-loop();
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+        if (play) {      
+            play = false;
+    } else {
+            play = true; 
+    }
+}
+})
+loop()

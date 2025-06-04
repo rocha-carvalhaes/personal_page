@@ -345,16 +345,23 @@ p.projectsTitle {
 }
 
 #game {
-    width: 100%;
+    width: auto;
     height: auto;
-    overflow: visible;
+    max-height: 100%;
+    /* max-width: 80%; */
+
+    /* Adicionando Flexbox para centralizar */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    flex-direction: column;  /* Empilha os elementos verticalmente */
 }
 
 #flappyCanvas {
-    /* background-color: rgb(124, 232, 240); */
-    min-width: 50%;
-    max-width: calc(100% - 20px);
-    height: auto;
+    background: linear-gradient(to bottom, #941ca9, #fd72dd);
+    height: 60vh;
+    max-height: 50%;
+    width: auto;
     border-radius: 12px;
     display: block;
     margin: 10px;
