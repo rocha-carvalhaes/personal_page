@@ -1,10 +1,6 @@
 const canvas = document.getElementById('flappyCanvas');
 const ctx = canvas.getContext('2d');
 
-// // canvas.style.backgroundColor = 'rgb(86, 38, 173)';
-
-// let play = true; // Variable to control the game loop
-
 const gravity = 0.3;
 let bounce = -8;
 const platformWidth = 60;
@@ -199,15 +195,5 @@ document.addEventListener('keyup', e => {
         ball.color = 'blue'
         bounce = -8; 
     }
-})
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-        if (play) {      
-            play = false;
-    } else {
-            play = true; 
-    }
-}
 })
 loop()
