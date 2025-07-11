@@ -17,24 +17,24 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://coloring-web-app-default-rtdb.firebaseio.com'
 })
 
-# Define uma rota para receber POST com nome + pergunta
-@app.route("/api/pergunta", methods=["POST"])
+# Define uma rota para receber POST com nome + score
+@app.route("/api/new-score", methods=["POST"])
 def receber_pergunta():
     data = request.get_json()
-    nome = data.get("name")
-    pergunta = data.get("question")
+    name = data.get("name")
+    score = data.get("score")
 
-    if not nome or not pergunta:
+    if not name or not score:
         return jsonify({"error": "Campos obrigatórios"}), 400
 
     # Salva no Firebase
-    ref = db.reference("questions")
+    ref = db.reference("scores")
     ref.push({
-        "name": nome,
-        "question": pergunta,
+        "name": name,
+        "score": score,
         "timestamp": request.environ.get("REQUEST_TIME", 0)
     })
-    print(f"Pergunta recebida: {nome} perguntou: {pergunta}")
+    print(f"Pergunta recebida: {name} perguntou: {score}")
     return jsonify({"status": "Pergunta salva com sucesso!"}), 200
 
 # Inicia o servidor local

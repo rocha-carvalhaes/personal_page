@@ -1,10 +1,16 @@
+import { enviarPontuacao } from './api.js';
+
 const canvas = document.getElementById('flappyCanvas');
 const ctx = canvas.getContext('2d');
 
 const gravity = 0.3;
-let bounce = -8;
+
 const platformWidth = 60;
 const platformHeight = 17;
+
+let bounce = -8;
+let ballHeight = 0;
+let gameOver = false;
 
 const ballImage = new Image();
 const platformImage = new Image();
@@ -76,6 +82,8 @@ function update() {
     ball.vy += gravity;
     ball.y += ball.vy;
     ball.x += ball.vx;
+    ballHeight -= ball.vy;
+    if (ballHeight < -250) { gameOver = true; }
 
     // Wrap horizontally
     if (ball.x < 0) ball.x = canvas.width;
@@ -163,9 +171,20 @@ function draw() {
     ctx.fillStyle = 'black';
     ctx.font = '20px Arial';
     ctx.fillText('Score: ' + score, 10, 30);
+    ctx.fillText('Ball Height: ' + Math.round(ballHeight), 10, 60);
 }
 
 function loop() {
+        if (gameOver) { 
+             (async () => {
+                await enviarPontuacao("Jogador", score); // substitua "Jogador" por nome real, se quiser
+                setTimeout(() => {
+                    alert(`Game Over! Score: ${score}`);
+                    document.location.reload();
+                }, 100);
+            })();;
+            return
+        };
         update();
         draw();
         requestAnimationFrame(loop);
