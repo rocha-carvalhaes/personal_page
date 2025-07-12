@@ -9,6 +9,7 @@ export function enviarPontuacao(name, score) {
     })
   })
   .then(response => response.json())
+  .then(data => console.log('Resposta da API:', data))
 //   .then(data => {
 //     document.getElementById("confirmation").textContent = data.status || "Enviado!";
 //     document.getElementById("nameInput").value = "";

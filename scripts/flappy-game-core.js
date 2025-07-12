@@ -1,5 +1,46 @@
 import { enviarPontuacao } from './api.js';
 
+// Cria o botão
+const playButton = document.createElement('button');
+playButton.textContent = 'Play';
+playButton.id = 'playButton';
+
+// Estiliza o botão no centro da tela
+playButton.style.position = 'absolute';
+playButton.style.top = '50%';
+playButton.style.left = '50%';
+playButton.style.transform = 'translate(-50%, -50%)';
+playButton.style.fontSize = '24px';
+playButton.style.padding = '12px 24px';
+playButton.style.cursor = 'pointer';
+playButton.style.zIndex = '10';
+
+// Adiciona ao body
+document.body.appendChild(playButton);
+
+let gameStarted = false;
+
+playButton.addEventListener('click', () => {
+    playButton.style.display = 'none'; // esconde o botão
+    gameStarted = true;
+    startGame(); // função que você vai definir para resetar o estado e começar
+});
+
+function startGame() {
+    gameOver = false;
+    score = 0;
+    ballHeight = 0;
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height - 60;
+    ball.vx = 0;
+    ball.vy = 0;
+    platforms = [
+        {x: canvas.width/2 - platformWidth/2, y: canvas.height + 60, width: platformWidth, height: platformHeight},
+        {x: canvas.width/4 - platformWidth/2, y: canvas.height, width: platformWidth, height: platformHeight}
+    ];
+    loop(); // recomeça o jogo
+}
+
 const canvas = document.getElementById('flappyCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -177,12 +218,14 @@ function draw() {
 function loop() {
         if (gameOver) { 
              (async () => {
-                await enviarPontuacao("Jogador", score); // substitua "Jogador" por nome real, se quiser
+                let jogador = window.prompt("Digite seu nome: ")
+                await enviarPontuacao(jogador, score); // substitua "Jogador" por nome real, se quiser
                 setTimeout(() => {
-                    alert(`Game Over! Score: ${score}`);
-                    document.location.reload();
+                    playButton.textContent = 'Play Again';
+                    playButton.style.display = 'block';
+                    gameStarted = false;
                 }, 100);
-            })();;
+            })();
             return
         };
         update();
