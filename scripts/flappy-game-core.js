@@ -30,13 +30,13 @@ function startGame() {
     gameOver = false;
     score = 0;
     ballHeight = 0;
-    ball.x = canvas.width / 2;
-    ball.y = canvas.height - 60;
+    ball.x = canvasWidth / 2;
+    ball.y = canvasHeight / 2; // Começar no centro
     ball.vx = 0;
     ball.vy = 0;
     platforms = [
-        {x: canvas.width/2 - platformWidth/2, y: canvas.height + 60, width: platformWidth, height: platformHeight},
-        {x: canvas.width/4 - platformWidth/2, y: canvas.height, width: platformWidth, height: platformHeight}
+        {x: canvasWidth/2 - platformWidth/2, y: canvasHeight/2 + 40, width: platformWidth, height: platformHeight},
+        {x: canvasWidth/4 - platformWidth/2, y: canvasHeight/2 + 20, width: platformWidth, height: platformHeight}
     ];
     loop(); // recomeça o jogo
 }
@@ -44,12 +44,34 @@ function startGame() {
 const canvas = document.getElementById('flappyCanvas');
 const ctx = canvas.getContext('2d');
 
-const gravity = 0.3;
+// Configurar resolução do canvas IMEDIATAMENTE
+const canvasWidth = 600;
+const canvasHeight = 400;
 
-const platformWidth = 60;
-const platformHeight = 17;
+// Configurar dimensões do canvas
+canvas.width = canvasWidth;
+canvas.height = canvasHeight;
 
-let bounce = -8;
+// Configurar para telas de alta resolução
+const devicePixelRatio = window.devicePixelRatio || 1;
+
+// Ajustar tamanho do canvas para a tela
+canvas.style.width = canvasWidth + 'px';
+canvas.style.height = canvasHeight + 'px';
+
+// Escalar o canvas para telas de alta resolução
+canvas.width = canvasWidth * devicePixelRatio;
+canvas.height = canvasHeight * devicePixelRatio;
+
+// Escalar o contexto para corresponder ao devicePixelRatio
+ctx.scale(devicePixelRatio, devicePixelRatio);
+
+const gravity = 0.35;
+
+const platformWidth = 120;
+const platformHeight = 34;
+
+let bounce = -14;
 let ballHeight = 0;
 let gameOver = false;
 
@@ -58,14 +80,14 @@ const platformImage = new Image();
 platformImage.src = 'assets/plataforma.png';
 
 let sun = {
-    x: canvas.width * 0.2,
-    y: canvas.height * 0.8,
+    x: canvasWidth * 0.2,
+    y: canvasHeight * 0.8,
     radius: 10,
 }
 
 let ball = {
-    x: canvas.width / 2,
-    y: canvas.height - 60,
+    x: canvasWidth / 2,
+    y: canvasHeight / 2, // Começar no centro do canvas
     radius: 5,
     vx: 0,
     vy: 0,
@@ -73,8 +95,8 @@ let ball = {
 };
 
 let platforms = [
-    {x: canvas.width/2 - platformWidth/2, y: canvas.height + 60, width: platformWidth, height: platformHeight},
-    {x: canvas.width/4 - platformWidth/2, y: canvas.height, width: platformWidth, height: platformHeight}
+    {x: canvasWidth/2, y: canvasHeight - 200, width: platformWidth, height: platformHeight},
+    {x: canvasWidth/4, y: canvasHeight - 320, width: platformWidth, height: platformHeight}
 ];
 let score = 0;
 let maxY = ball.y;
@@ -88,7 +110,7 @@ function drawSun() {
 }
 
 function drawBall(facingRight = false, falling = false) {
-    const imgWidth = 60;
+    const imgWidth = 90;
     const imgHeight = imgWidth / (673 / 528); // maintain aspect ratio
 
     ctx.save(); // Save current state
@@ -100,11 +122,11 @@ function drawBall(facingRight = false, falling = false) {
 
     if (facingRight) {
         // Move the origin to the ball's position and flip horizontally
-        ctx.translate(ball.x + imgWidth / 2, ball.y - imgHeight * 0.7);
+        ctx.translate(ball.x + imgWidth / 2, ball.y - imgHeight);
         ctx.scale(-1, 1);
         ctx.drawImage(ballImage, 0, 0, imgWidth, imgHeight);
     } else {
-        ctx.drawImage(ballImage, ball.x - imgWidth / 2, ball.y - imgHeight * 0.7, imgWidth, imgHeight);
+        ctx.drawImage(ballImage, ball.x - imgWidth / 2, ball.y - imgHeight, imgWidth, imgHeight);
     }
 
     ctx.restore(); // Restore original state
@@ -127,8 +149,8 @@ function update() {
     if (ballHeight < -250) { gameOver = true; }
 
     // Wrap horizontally
-    if (ball.x < 0) ball.x = canvas.width;
-    if (ball.x > canvas.width) ball.x = 0;
+    if (ball.x < 0) ball.x = canvasWidth;
+    if (ball.x > canvasWidth) ball.x = 0;
 
     // Bounce on platform
     for (let p of platforms) {
@@ -144,7 +166,7 @@ function update() {
     }
 
     // Bounce on floor
-    if (ball.y + ball.radius > canvas.height) {
+    if (ball.y + ball.radius > canvasHeight) {
         ball.vy = bounce;
     }
 
@@ -157,36 +179,31 @@ function update() {
     //     // console.log("sobe",maxY, ball.y);
     // }
 
-    const scrollThresholdUp = canvas.height / 2;
-    const scrollThresholdDown = canvas.height / 2;
-
-    if (ball.y < scrollThresholdUp) {
-        const dy = scrollThresholdUp - ball.y;
-        ball.y = scrollThresholdUp; // fixar a bolinha no meio da tela
-        maxY -= dy;
-
-        for (let p of platforms) p.y += dy;
-
-        // Adiciona nova plataforma se necessário
-        if (ball.y - platforms[platforms.length - 1].y >= 0 && ball.y - platforms[platforms.length - 1].y < 5) {
-            platforms.push({
-                x: Math.random() * (canvas.width - platformWidth),
-                y: -15,
-                width: platformWidth,
-                height: platformHeight
-            });
+    // Manter o personagem sempre no centro do canvas
+    const centerY = canvasHeight / 2; // 200
+    
+    // Se o personagem não estiver no centro, mover as plataformas
+    if (ball.y !== centerY) {
+        const dy = ball.y - centerY;
+        ball.y = centerY; // fixar a bolinha no centro da tela
+        
+        // Mover todas as plataformas na direção oposta
+        for (let p of platforms) {
+            p.y -= dy;
         }
-    } else if (ball.y > scrollThresholdDown) {
-        const dy = ball.y - scrollThresholdDown;
-        ball.y = scrollThresholdDown; // fixar a bolinha no meio da tela
-        maxY += dy;
+        
+        // Atualizar maxY
+        maxY -= dy;
+    }
 
-        for (let p of platforms) p.y -= dy;
-
-        // Remove plataformas que saíram da tela
-        // if (platforms[platforms.length - 1].y > canvas.height) {
-        //     platforms.pop();
-        // }
+    // Adiciona nova plataforma se necessário
+    if (ball.y - platforms[platforms.length - 1].y >= 0 && ball.y - platforms[platforms.length - 1].y < 5) {
+        platforms.push({
+            x: Math.random() * (canvasWidth - platformWidth),
+            y: -15,
+            width: platformWidth,
+            height: platformHeight
+        });
     }
     // Game over
 //   if (ball.y > canvas.height) {
@@ -203,19 +220,41 @@ let falling = ball.vy > 0.5;
 
 
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     drawSun();
     falling = ball.vy > 0.5
     drawBall(facingRight, falling);
     drawPlatforms();
     
-    ctx.fillStyle = 'black';
-    ctx.font = '20px Arial';
-    ctx.fillText('Score: ' + score, 10, 30);
-    ctx.fillText('Ball Height: ' + Math.round(ballHeight), 10, 60);
+    // Desenha o score com estilo melhorado
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(10, 10, 120, 40);
+    
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 24px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('SCORE', 20, 30);
+    
+    ctx.font = 'bold 32px Arial';
+    ctx.fillText(score.toString(), 20, 60);
+    
+    // Debug: Coordenadas do personagem
+    ctx.fillStyle = 'red';
+    ctx.font = '12px Arial';
+    ctx.fillText(`Ball: (${Math.round(ball.x)}, ${Math.round(ball.y)})`, ball.x + 10, ball.y - 10);
+    
+    // Debug: Coordenadas das plataformas
+    ctx.fillStyle = 'blue';
+    platforms.forEach((p, index) => {
+        ctx.fillText(`P${index}: (${Math.round(p.x)}, ${Math.round(p.y)})`, p.x + 5, p.y - 5);
+    });
 }
 
 function loop() {
+        if (!gameStarted) {
+            return; // Não executa o loop se o jogo não foi iniciado
+        }
+        
         if (gameOver) { 
              (async () => {
                 let jogador = window.prompt("Digite seu nome: ")
@@ -235,11 +274,11 @@ function loop() {
 
 document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') {
-        ball.vx = -3
+        ball.vx = -4
         facingRight = false; // Set facing left when moving left
     };
     if (e.key === 'ArrowRight') {
-        ball.vx = 3
+        ball.vx = 4
         facingRight = true; // Set facing right when moving right
     }
 });
