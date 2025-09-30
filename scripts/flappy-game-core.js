@@ -1,5 +1,10 @@
 import { enviarPontuacao } from './api.js';
 
+// Variáveis de controle do jogo
+let gameStarted = false;
+let gamePaused = false;
+let showCoordinates = false;
+
 // Cria o botão
 const playButton = document.createElement('button');
 playButton.textContent = 'Play';
@@ -15,16 +20,79 @@ playButton.style.padding = '12px 24px';
 playButton.style.cursor = 'pointer';
 playButton.style.zIndex = '10';
 
+// Cria o menu de pause
+const pauseMenu = document.createElement('div');
+pauseMenu.id = 'pauseMenu';
+pauseMenu.style.position = 'absolute';
+pauseMenu.style.top = '50%';
+pauseMenu.style.left = '50%';
+pauseMenu.style.transform = 'translate(-50%, -50%)';
+pauseMenu.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+pauseMenu.style.color = 'white';
+pauseMenu.style.padding = '30px';
+pauseMenu.style.borderRadius = '10px';
+pauseMenu.style.textAlign = 'center';
+pauseMenu.style.zIndex = '20';
+pauseMenu.style.display = 'none';
+pauseMenu.style.fontFamily = 'Arial, sans-serif';
+
+pauseMenu.innerHTML = `
+    <h2 style="margin-top: 0; margin-bottom: 20px;">JOGO PAUSADO</h2>
+    <div style="margin-bottom: 15px;">
+        <label style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <input type="checkbox" id="showCoordsCheckbox" ${showCoordinates ? 'checked' : ''}>
+            <span>Mostrar Coordenadas</span>
+        </label>
+    </div>
+    <button id="resumeButton" style="
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 10px;
+    ">Continuar</button>
+    <button id="loseButton" style="
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    ">Perder</button>
+`;
+
 // Adiciona ao body
 document.body.appendChild(playButton);
+document.body.appendChild(pauseMenu);
 
-let gameStarted = false;
+// Event listeners para o menu de pause (após a criação do HTML)
+document.getElementById('resumeButton').addEventListener('click', () => {
+    gamePaused = false;
+    pauseMenu.style.display = 'none';
+});
+
+document.getElementById('loseButton').addEventListener('click', () => {
+    gamePaused = false;
+    pauseMenu.style.display = 'none';
+    gameOver = true;
+});
+
+document.getElementById('showCoordsCheckbox').addEventListener('change', (e) => {
+    showCoordinates = e.target.checked;
+});
 
 playButton.addEventListener('click', () => {
     playButton.style.display = 'none'; // esconde o botão
     gameStarted = true;
+    gameOver = false; // Garantir que gameOver está false
     startGame(); // função que você vai definir para resetar o estado e começar
 });
+
+// Event listeners para o menu de pause (serão adicionados após a criação do HTML)
 
 function startGame() {
     gameOver = false;
@@ -36,9 +104,9 @@ function startGame() {
     ball.vy = 0;
     platforms = [
         {x: canvasWidth/2 - platformWidth/2, y: canvasHeight/2 + 40, width: platformWidth, height: platformHeight},
-        {x: canvasWidth/4 - platformWidth/2, y: canvasHeight/2 + 20, width: platformWidth, height: platformHeight}
+        {x: canvasWidth/4 - platformWidth/2, y: canvasHeight/2 - 120, width: platformWidth, height: platformHeight}
     ];
-    loop(); // recomeça o jogo
+    // Não chama loop() aqui - o loop principal já está rodando
 }
 
 const canvas = document.getElementById('flappyCanvas');
@@ -82,13 +150,13 @@ platformImage.src = 'assets/plataforma.png';
 let sun = {
     x: canvasWidth * 0.2,
     y: canvasHeight * 0.8,
-    radius: 10,
+    radius: 40,
 }
 
 let ball = {
     x: canvasWidth / 2,
     y: canvasHeight / 2, // Começar no centro do canvas
-    radius: 5,
+    radius: 1,
     vx: 0,
     vy: 0,
     color: 'blue',
@@ -228,31 +296,36 @@ function draw() {
     
     // Desenha o score com estilo melhorado
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    ctx.fillRect(10, 10, 120, 40);
+    ctx.fillRect(10, 10, 150, 35);
     
     ctx.fillStyle = 'white';
-    ctx.font = 'bold 24px Arial';
+    ctx.font = 'bold 20px Arial';
     ctx.textAlign = 'left';
-    ctx.fillText('SCORE', 20, 30);
+    ctx.fillText(`SCORE: ${score}`, 20, 32);
     
-    ctx.font = 'bold 32px Arial';
-    ctx.fillText(score.toString(), 20, 60);
-    
-    // Debug: Coordenadas do personagem
-    ctx.fillStyle = 'red';
-    ctx.font = '12px Arial';
-    ctx.fillText(`Ball: (${Math.round(ball.x)}, ${Math.round(ball.y)})`, ball.x + 10, ball.y - 10);
-    
-    // Debug: Coordenadas das plataformas
-    ctx.fillStyle = 'blue';
-    platforms.forEach((p, index) => {
-        ctx.fillText(`P${index}: (${Math.round(p.x)}, ${Math.round(p.y)})`, p.x + 5, p.y - 5);
-    });
+    // Debug: Coordenadas do personagem (apenas se ativado)
+    if (showCoordinates) {
+        ctx.fillStyle = 'red';
+        ctx.font = '12px Arial';
+        ctx.fillText(`Ball: (${Math.round(ball.x)}, ${Math.round(ball.y)})`, ball.x + 10, ball.y - 10);
+        
+        // Debug: Coordenadas das plataformas
+        ctx.fillStyle = 'blue';
+        platforms.forEach((p, index) => {
+            ctx.fillText(`P${index}: (${Math.round(p.x)}, ${Math.round(p.y)})`, p.x + 5, p.y - 5);
+        });
+    }
 }
 
 function loop() {
         if (!gameStarted) {
+            requestAnimationFrame(loop);
             return; // Não executa o loop se o jogo não foi iniciado
+        }
+        
+        if (gamePaused) {
+            requestAnimationFrame(loop);
+            return; // Pausa o jogo mas mantém o loop rodando
         }
         
         if (gameOver) { 
@@ -263,8 +336,10 @@ function loop() {
                     playButton.textContent = 'Play Again';
                     playButton.style.display = 'block';
                     gameStarted = false;
+                    gameOver = false; // Reset gameOver para permitir novo jogo
                 }, 100);
             })();
+            requestAnimationFrame(loop);
             return
         };
         update();
@@ -273,6 +348,15 @@ function loop() {
 }
 
 document.addEventListener('keydown', e => {
+    // Controle de pause
+    if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
+        if (gameStarted && !gameOver) {
+            gamePaused = !gamePaused;
+            pauseMenu.style.display = gamePaused ? 'block' : 'none';
+        }
+        return;
+    }
+    
     if (e.key === 'ArrowLeft') {
         ball.vx = -4
         facingRight = false; // Set facing left when moving left
@@ -294,7 +378,7 @@ document.addEventListener('keydown', e => {
 document.addEventListener('keyup', e => {
     if (e.key === ' ') {
         ball.color = 'blue'
-        bounce = -8; 
+        bounce = -14; 
     }
 })
 loop()
